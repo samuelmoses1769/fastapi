@@ -1,0 +1,5 @@
+$kind: http-request
+description: ""
+url: "{{URL}}/posts/"
+method: GET
+order: 4503590564931099

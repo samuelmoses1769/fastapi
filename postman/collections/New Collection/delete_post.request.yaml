@@ -1,0 +1,5 @@
+$kind: http-request
+description: ""
+url: "{{URL}}/posts/delete/1"
+method: DELETE
+order: 4503161648124389

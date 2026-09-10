@@ -1,0 +1,16 @@
+$kind: http-request
+description: ""
+url: "{{URL}}/posts/update/5"
+method: PUT
+body:
+  type: json
+  content: "{\r
+
+    \  \"title\": \"Shakti\",\r
+
+    \  \"content\": \"Ntr Movies\",\r
+
+    \  \"published\": true\r
+
+    }"
+order: 4502588928694837
