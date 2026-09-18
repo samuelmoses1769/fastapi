@@ -6,19 +6,28 @@ from models import Base
 from alembic import context
 from config import settings
 from sqlalchemy.engine import URL
+
 # this is the Alembic Config object, which provides
 # access to the values within the .ini file in use.
 config = context.config
-database_url = URL.create(
-    "postgresql+psycopg2",
-    username=settings.database_username,
-    password=settings.database_password,
-    host=settings.database_host,
-    port=settings.database_port,
-    database="FastApi",
-)
+
+if settings.database_url:
+    database_url = settings.database_url
+else:
+    database_url = URL.create(
+        "postgresql+psycopg2",
+        username=settings.database_username,
+        password=settings.database_password,
+        host=settings.database_host,
+        port=settings.database_port,
+        database=settings.database_name,
+    )
+
 config.set_main_option(
-    "sqlalchemy.url", database_url.render_as_string(hide_password=False)
+    "sqlalchemy.url",
+    database_url.render_as_string(hide_password=False)
+    if isinstance(database_url, URL)
+    else database_url,
 )
 
 # Interpret the config file for Python logging.

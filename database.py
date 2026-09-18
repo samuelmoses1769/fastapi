@@ -3,24 +3,32 @@ from sqlalchemy.engine import URL
 from sqlalchemy.orm import sessionmaker, declarative_base
 from config import settings
 
-DATABASE_URL = URL.create(
-    "postgresql+psycopg2",
-    username=settings.database_username,
-    password=settings.database_password,
-    host=settings.database_host,
-    port=settings.database_port,
-    database="FastApi",
-)
 
+def build_database_url():
+    if settings.database_url:
+        return settings.database_url
+
+    return URL.create(
+        "postgresql+psycopg2",
+        username=settings.database_username,
+        password=settings.database_password,
+        host=settings.database_host,
+        port=settings.database_port,
+        database=settings.database_name,
+    )
+
+
+DATABASE_URL = build_database_url()
 engine = create_engine(DATABASE_URL)
 
 SessionLocal = sessionmaker(
     autocommit=False,
     autoflush=False,
-    bind=engine
+    bind=engine,
 )
 
 Base = declarative_base()
+
 
 def get_db():
     db = SessionLocal()
